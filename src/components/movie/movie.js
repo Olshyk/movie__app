@@ -77,7 +77,7 @@ export default class Movie extends Component {
           <Genres genreIds={genreIds} />
           <p className="movie__description">{this.cutText(overview, 170, title.length, genreIds)}</p>
           <StarsRating rate={rate} id={id} starRate={starRate} />
-          <span className={classNames}>{vote}</span>
+          <span className={classNames}>{Math.round(vote * 10) / 10}</span>
         </div>
       </li>
     );
