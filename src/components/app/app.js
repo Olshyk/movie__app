@@ -151,6 +151,8 @@ export default class App extends Component {
       )
     ) : null;
 
+    const pagesCount = !rated ? totalPages : 1;
+
     let classNames = 'header__button';
     const searchTab = !rated ? (classNames += ' header__button--active') : 'header__button';
     const rateTab = rated ? (classNames += ' header__button--active') : 'header__button';
@@ -175,7 +177,7 @@ export default class App extends Component {
             {content}
           </main>
           <footer className="footer">
-            <PagePagination page={page} query={query} totalPages={totalPages} onChange={this.onChange} />
+            <PagePagination page={page} query={query} totalPages={pagesCount} onChange={this.onChange} />
           </footer>
         </GenresProvider>
       </section>
