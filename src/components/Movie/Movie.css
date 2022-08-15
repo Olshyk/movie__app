@@ -1,0 +1,159 @@
+.movie {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 600px;
+  height: 281px;
+  margin: 18px 0;
+  padding-right: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  position: relative;
+}
+
+.movie__image {
+  height: 100%;
+  margin-right: 20px;
+}
+
+.movie__info {
+  width: 255px;
+  margin: 12px 0 0 0;
+}
+
+.movie__title {
+  font-size: 20px;
+  line-height: 28px;
+  width: 225px;
+}
+
+.movie__description {
+  max-height: 129px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie__rate {
+  position: absolute;
+  top: 12px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 12px;
+  line-height: 22px;
+  margin-left: auto;
+}
+
+.movie__rate--bad {
+  border: 2px solid #E90000;
+}
+
+.movie__rate--ok {
+  border: 2px solid #E97E00;
+}
+
+.movie__rate--good {
+  border: 2px solid #E9D100;
+}
+
+.movie__rate--great {
+  border: 2px solid #66E900;
+}
+
+.movie__date {
+  margin: 7px 0;
+  color: #827E7E
+}
+
+.ant-tag {
+  margin-bottom: 8px;
+}
+
+ul.ant-rate {
+  position: absolute;
+  bottom: 12px;
+}
+
+
+@media (max-width: 550px) {
+  .movie {
+    width: 387px;
+    height: 245px;
+    margin: 9px 0;
+  }
+
+  .movie__title {
+    width: 250px;
+  }
+
+  .movie__info {
+    margin-left: 13px;
+    margin-top: 2px;
+    flex-shrink: 3;
+  }
+  
+  .movie__image {
+    height: 91px;
+    width: 60px;
+    margin: 6px 0 10px 10px;
+  }
+
+  .movie__description {
+    width: 367px;
+    margin-left: -75px;
+    margin-top: 5px;
+    max-height: 92px;
+  }
+
+  ul.ant-rate {
+    right: -15px;
+  }
+
+  .movie__rate {
+    top: 5px;
+    right: 8px;
+  }
+
+  @media (max-width: 400px) {
+    .movie__description {
+      width: 355px;
+    }
+  }
+
+  @media (max-width: 370px) {
+    .movie__info {
+      width: 225px;
+    }
+
+    .movie__title {
+      width: 245px;
+    }
+
+    .movie__description {
+      width: 340px;
+    }
+  }
+
+  @media (max-width: 340px) {
+    .movie__title {
+      width: 210px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .movie__info {
+      width: 200px;
+    }
+
+    .movie__description {
+      width: 310px;
+    }
+
+    .genres {
+      height: 28px;
+      overflow: hidden;
+    }
+  }
+}
