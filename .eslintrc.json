@@ -30,6 +30,7 @@
   "rules": {
     "import/no-anonymous-default-export": "off",
     "import/no-extraneous-dependencies": "off",
+    "import/prefer-default-export": "off",
     "indent": "off",
     "prettier/prettier": "error",
     "linebreak-style": [0, "unix"],
@@ -37,6 +38,8 @@
     "semi": ["error", "always"],
     "react/react-in-jsx-scope": "off",
     "react/state-in-constructor": ["error", "never"],
+    "react/destructuring-assignment": "off",
+    "no-restricted-syntax": [1, "always"],
     "class-methods-use-this": "off",
     "react/static-property-placement": "off",
     "react/jsx-props-no-spreading": "off",

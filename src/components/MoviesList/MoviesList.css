@@ -7,3 +7,9 @@
   margin: 0 auto;
 }
 
+@media (max-width: 550px) {
+  .movies-list {
+    margin: -18px 0 0 0;
+  }
+}
+

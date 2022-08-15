@@ -1,65 +1,46 @@
 import React, { Component } from 'react';
 import { debounce } from 'lodash';
 
-import Service from '../../services/service';
-import Spinner from '../spinner';
-import AlertMessage from '../alert-message';
-import MoviesList from '../movies-list';
-import SearchForm from '../search-form';
-import PagePagination from '../page-pagination';
+import { getMovies, getTotal, getGenres, getRated } from '../../services/service';
+import { Spinner } from '../Spinner';
+import { AlertMessage } from '../AlertMessage';
+import { MoviesList } from '../MoviesList';
+import { SearchForm } from '../SearchForm';
+import { PagePagination } from '../PagePagination';
 import { GenresProvider } from '../../services/context';
 
-import './app.css';
+import './App.css';
 
 export default class App extends Component {
-  service = new Service();
-
   state = {
     movies: [],
     loading: true,
     error: false,
     online: window.navigator.onLine,
     page: 1,
-    query: 'return',
+    query: '',
     totalPages: 1,
     rated: false,
     ratedMovies: [],
     genres: [],
-    apiKey: 'b43ecb4f90e6ab31d4d67240b99c5bf0',
   };
 
   debouncedSearch = debounce(() => {
-    const { page, query, apiKey } = this.state;
-
-    let link = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}&page=${page}`;
-
-    if (!query) {
-      link = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&page=${page}`;
-    }
+    const { page, query } = this.state;
 
     this.setState({ loading: true });
 
-    this.service.getMovies(link).then(this.onMoviesLoaded).catch(this.onError);
-    this.service.getTotal(link).then(this.getTotal).catch(this.onError);
-    this.service
-      .getGenres(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`)
-      .then(this.getGenresList)
-      .catch(this.onError);
+    getMovies(page, query).then(this.onMoviesLoaded).catch(this.onError);
+    getTotal(page, query).then(this.getTotal).catch(this.onError);
+    getGenres().then(this.getGenresList).catch(this.onError);
   }, 500);
 
   componentDidMount() {
-    const { page, query, apiKey } = this.state;
+    const { page } = this.state;
 
-    const link = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}&page=${page}`;
-
-    this.service.getMovies(link).then(this.onMoviesLoaded).catch(this.onError);
-
-    this.service.getTotal(link).then(this.getTotal).catch(this.onError);
-    this.service
-      .getGenres(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`)
-      .then(this.getGenresList)
-      .catch(this.onError);
-
+    getMovies(page).then(this.onMoviesLoaded).catch(this.onError);
+    getTotal(page).then(this.getTotal).catch(this.onError);
+    getGenres().then(this.getGenresList).catch(this.onError);
     this.onRatedLoaded();
 
     window.addEventListener('offline', this.handleNetworkChange);
@@ -80,23 +61,21 @@ export default class App extends Component {
   onMoviesLoaded = (movies) => this.setState({ movies, loading: false });
 
   onRatedLoaded = () => {
-    const { apiKey } = this.state;
-
     const keys = Object.keys(localStorage);
     const ratedArray = [];
 
-    // eslint-disable-next-line no-restricted-syntax
     for (const key of keys) {
-      this.service
-        .getRated(`https://api.themoviedb.org/3/movie/${key}?api_key=${apiKey}`)
-        .then((movie) =>
+      getRated(key)
+        .then((movie) => {
+          ratedArray.push(movie);
+        })
+        .then(() => {
           this.setState(() => {
-            ratedArray.push(movie);
             return {
               ratedMovies: ratedArray,
             };
-          })
-        )
+          });
+        })
         .catch(this.onError);
     }
   };
@@ -117,8 +96,8 @@ export default class App extends Component {
 
   rate = async (id, value) => {
     await this.setState(({ movies }) => {
-      const newArr = movies.map((el) => {
-        const newItem = { ...el };
+      const newArr = movies.map((item) => {
+        const newItem = { ...item };
         if (newItem.id === id) {
           newItem.starRate = value;
         }
@@ -147,7 +126,7 @@ export default class App extends Component {
       !rated ? (
         <MoviesList movies={movies} rate={this.rate} />
       ) : (
-        <MoviesList movies={ratedMovies} rate={this.rate} />
+        <MoviesList movies={ratedMovies} rate={this.rate} rated={rated} />
       )
     ) : null;
 

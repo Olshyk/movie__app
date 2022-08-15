@@ -15,16 +15,15 @@ export default class StarsRating extends Component {
   };
 
   state = {
-    // eslint-disable-next-line react/destructuring-assignment
     value: this.props.starRate,
   };
 
-  rate = (e) => {
+  rate = (stars) => {
     const { id, rate } = this.props;
 
-    localStorage.setItem(id, JSON.stringify(e));
-    this.setState({ value: e });
-    rate(id, e);
+    localStorage.setItem(id, JSON.stringify(stars));
+    this.setState({ value: stars });
+    rate(id, stars);
   };
 
   render() {

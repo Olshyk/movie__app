@@ -1,7 +1,7 @@
 import React from 'react';
 import { Spin } from 'antd';
 import 'antd/dist/antd.css';
-import './spinner.css';
+import './Spinner.css';
 
 function Spinner() {
   return (

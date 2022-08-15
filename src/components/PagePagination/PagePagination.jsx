@@ -18,7 +18,6 @@ export default class PagePagination extends Component {
   };
 
   state = {
-    // eslint-disable-next-line react/destructuring-assignment
     current: this.props.page,
   };
 
@@ -30,11 +29,11 @@ export default class PagePagination extends Component {
     }
   }
 
-  onChange = (e) => {
+  onChange = (page) => {
     const { onChange } = this.props;
 
-    this.setState({ current: e });
-    onChange(e);
+    this.setState({ current: page });
+    onChange(page);
     window.scrollTo(0, 0);
   };
 

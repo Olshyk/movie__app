@@ -17,11 +17,11 @@ export default class SearchForm extends Component {
     search: '',
   };
 
-  onChange = (e) => {
+  onChange = (event) => {
     const { onSearch } = this.props;
     const { search } = this.state;
 
-    this.setState({ search: e.target.value });
+    this.setState({ search: event.target.value });
     onSearch(search);
   };
 
